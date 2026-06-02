@@ -26,6 +26,53 @@
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: #f1f1f1; }
   ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+  /* ===== Responsive Design ===== */
+  @media (max-width: 768px) {
+    body { font-size: 14px; }
+    .card { border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    /* Stack grids vertically */
+    .grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+    .flex-wrap { flex-direction: column; align-items: stretch !important; }
+    /* Reduce padding */
+    .p-4 { padding: 12px !important; }
+    .p-3 { padding: 8px !important; }
+    .mb-4 { margin-bottom: 12px !important; }
+    .mb-3 { margin-bottom: 8px !important; }
+    /* Make word cloud smaller */
+    .word-cloud-item { margin: 2px 3px; font-size: 0.9em !important; }
+    /* Smaller select */
+    select { font-size: 13px !important; padding: 6px 24px 6px 8px !important; }
+    /* Make stats cards stack */
+    .grid-cols-3 { grid-template-columns: 1fr !important; }
+    /* Adjust header */
+    .text-2xl { font-size: 18px !important; }
+    .text-xl { font-size: 16px !important; }
+    .text-lg { font-size: 15px !important; }
+    .text-sm { font-size: 13px !important; }
+    .text-xs { font-size: 11px !important; }
+    /* Make flex items wrap */
+    .flex { flex-wrap: wrap; }
+    .gap-4 { gap: 8px !important; }
+    .gap-3 { gap: 6px !important; }
+    /* Adjust rank cards */
+    .w-10 { width: 32px !important; height: 32px !important; font-size: 16px !important; }
+    /* Make trend indicators wrap */
+    .ml-auto { margin-left: 0 !important; margin-top: 8px; }
+    /* Adjust chart bars */
+    .h-24 { height: 80px !important; }
+    .h-20 { height: 64px !important; }
+    /* Make progress bars smaller */
+    .h-3 { height: 6px !important; }
+  }
+
+  @media (max-width: 480px) {
+    body { font-size: 13px; }
+    .p-4 { padding: 10px !important; }
+    .card { border-radius: 6px; }
+    select { font-size: 12px !important; }
+    .word-cloud-item { margin: 1px 2px; }
+  }
 </style>
 </head>
 <body>
