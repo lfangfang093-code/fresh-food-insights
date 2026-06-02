@@ -10,9 +10,9 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body { background: #f8f9fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-  .word-cloud-item { display: inline-block; margin: 2px 4px; cursor: default; transition: transform 0.2s; white-space: nowrap; }
+  .word-cloud-item { display: inline-block; margin: 2px 4px; cursor: default; transition: transform 0.2s; white-space: nowrap; line-height: 1.3; }
   .word-cloud-item:hover { transform: scale(1.1); }
-  .word-cloud-container { line-height: 1.2; text-align: center; }
+  .word-cloud-container { line-height: 1.3; text-align: center; display: block !important; justify-content: unset !important; }
   .word-cloud-item:hover { transform: scale(1.1); }
   .progress-bar { transition: width 0.6s ease; }
   .rank-gold { background: linear-gradient(135deg, #ffd700, #ffa500); }
@@ -10312,7 +10312,7 @@ function WordCloud({ notes }) {
           <span className="w-2 h-2 rounded-full bg-rose-400 inline-block"></span>
           产品热词（品种词）Top 20
         </h4>
-        <div className="word-cloud-container flex flex-wrap justify-center gap-1">
+        <div className="word-cloud-container">
           {productWords.map(({ word, freq, type }) => (
             <WordCloudTag key={word} word={word} freq={freq} maxFreq={maxProductFreq} />
           ))}
@@ -10324,7 +10324,7 @@ function WordCloud({ notes }) {
           <span className="w-2 h-2 rounded-full bg-blue-400 inline-block"></span>
           标题热词（其他高频词）Top 20
         </h4>
-        <div className="word-cloud-container flex flex-wrap justify-center gap-1">
+        <div className="word-cloud-container">
           {titleWords.map(({ word, freq, type }) => (
             <WordCloudTag key={word} word={word} freq={freq} maxFreq={maxTitleFreq} />
           ))}
