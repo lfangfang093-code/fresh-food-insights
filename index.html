@@ -10,7 +10,9 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body { background: #f8f9fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-  .word-cloud-item { display: inline-block; margin: 3px 5px; cursor: default; transition: transform 0.2s; }
+  .word-cloud-item { display: inline-block; margin: 2px 4px; cursor: default; transition: transform 0.2s; white-space: nowrap; }
+  .word-cloud-item:hover { transform: scale(1.1); }
+  .word-cloud-container { line-height: 1.2; text-align: center; }
   .word-cloud-item:hover { transform: scale(1.1); }
   .progress-bar { transition: width 0.6s ease; }
   .rank-gold { background: linear-gradient(135deg, #ffd700, #ffa500); }
@@ -10132,6 +10134,7 @@ function getRankings(notes, mode) {
     });
     const result = Object.entries(ctMap).map(([ct, data]) => {
       const avgV = data.sumV / data.count;
+      // Pick a representative note (first one in group)
       const rep = data.notes[0];
       return { ...rep, v: avgV, ct: ct, count: data.count };
     });
@@ -10277,23 +10280,20 @@ function Header({ onRefresh }) {
   );
 }
 
-function WordCloudTag({ word, freq, maxFreq, type }) {
+function WordCloudTag({ word, freq, maxFreq }) {
   const ratio = freq / maxFreq;
-  // Dramatic size differentiation
   const size = ratio >= 0.8 ? 30 : ratio >= 0.5 ? 24 : ratio >= 0.25 ? 18 : ratio >= 0.1 ? 15 : 12;
-  // Color intensity based on frequency
-  const color = WORD_COLORS_CSS[type] || '#6b7280';
-  const textOpacity = ratio > 0.5 ? '1' : ratio > 0.25 ? '0.8' : '0.6';
+  const color = ratio > 0.5 ? '#e11d48' : ratio > 0.25 ? '#991b1b' : '#6b7280';
   return (
     <span
       className="word-cloud-item px-1"
       style={{
         fontSize: size + 'px',
         color: color,
-        opacity: textOpacity,
+        opacity: ratio > 0.5 ? '1' : ratio > 0.25 ? '0.8' : '0.65',
         fontWeight: ratio > 0.5 ? '800' : ratio > 0.25 ? '600' : '400',
       }}
-      title={`${type} · 出现${freq}次`}
+      title={`出现${freq}次`}
     >
       {word}
     </span>
@@ -10312,9 +10312,9 @@ function WordCloud({ notes }) {
           <span className="w-2 h-2 rounded-full bg-rose-400 inline-block"></span>
           产品热词（品种词）Top 20
         </h4>
-        <div className="flex flex-wrap gap-1 leading-loose">
+        <div className="word-cloud-container flex flex-wrap justify-center gap-1">
           {productWords.map(({ word, freq, type }) => (
-            <WordCloudTag key={word} word={word} freq={freq} maxFreq={maxProductFreq} type={type} />
+            <WordCloudTag key={word} word={word} freq={freq} maxFreq={maxProductFreq} />
           ))}
         </div>
       </div>
@@ -10324,13 +10324,12 @@ function WordCloud({ notes }) {
           <span className="w-2 h-2 rounded-full bg-blue-400 inline-block"></span>
           标题热词（其他高频词）Top 20
         </h4>
-        <div className="flex flex-wrap gap-1 leading-loose">
+        <div className="word-cloud-container flex flex-wrap justify-center gap-1">
           {titleWords.map(({ word, freq, type }) => (
-            <WordCloudTag key={word} word={word} freq={freq} maxFreq={maxTitleFreq} type={type} />
+            <WordCloudTag key={word} word={word} freq={freq} maxFreq={maxTitleFreq} />
           ))}
         </div>
       </div>
-
     </div>
   );
 }
@@ -10375,7 +10374,7 @@ function OverviewSection({ allNotes }) {
       {/* Top 20 Merchant Stats */}
       <div className="card p-4">
         <h3 className="font-bold text-gray-700 mb-3 text-sm flex items-center gap-1">
-          <span>🏆</span> 头部商家聚合
+          <span>🏆</span> DGMV 80% 头部商家
           {top20Stats.merchantCount && <span className="text-xs text-gray-400">（{top20Stats.merchantCount} 个商家）</span>}
         </h3>
         <StatCard
